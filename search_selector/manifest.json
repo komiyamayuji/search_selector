@@ -1,0 +1,14 @@
+﻿{
+  "manifest_version": 2,
+  "name": "セレクタ検索",
+  "version": "0.2.1",
+  "description": "ページ内のセレクタを検索できるアドオン",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*","https://*/*"],
+      "css": ["style.css"],
+      "js": ["jquery-2.1.1.min.js", "function.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
