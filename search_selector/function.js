@@ -26,6 +26,7 @@ $(function(){
     };
     //function:該当箇所へスクロール
     var scrollFunc = function($selectorArg,$thisIndex){
+      console.log($selectorArg)
       try{
         var ofsetH = $selectorArg.eq($thisIndex).offset().top - 150;//150は余白
         var tryFlag = true;
@@ -39,7 +40,7 @@ $(function(){
     //function:検索対象のループ
     var repetitionFunc = function ($selectorArg,typeArg) {
       var $thisSelector = $(document).find($selectorArg).filter(function () {
-        if($(this).attr('id')&&!$(this).attr('id').match(/plugin-search-selector/g)){ return $(this); }
+        // if($(this).attr('id')&&!$(this).attr('id').match(/plugin-search-selector/g)){ return $(this); }
       });
       if( repetitionFlag && repetitionFlag === $selectorArg){
         //indexの選定 リバース処理
@@ -68,7 +69,7 @@ $(function(){
     };
 
     //start:検索値の取得
-    var selector = $(document).find('#plugin-search-selector-input').val().trim();
+    var selector = String($(document).find('#plugin-search-selector-input').val()).trim();
 
     //start:検索値のフォーマット検知・生成
     var regExpId = /[#]/g;//ID
@@ -92,12 +93,12 @@ $(function(){
       var selectorConvID = selector.replace(/^/,'#');
       var selectorConvClass = selector.replace(/^/,'.').replace(/[\s]+/g,'.');
       //セレクタを検索
-      if($(selectorConvID).length){
+      if($(selector).length) {
+        repetitionFunc(selector, typeArg);
+      }else if($(selectorConvID).length){
         repetitionFunc(selectorConvID,typeArg);
       }else if($(selectorConvClass).length){
         repetitionFunc(selectorConvClass,typeArg);
-      }else if($(selector).length){
-        repetitionFunc(selector,typeArg);
       }else{
         console.log('該当なし：検索したセレクタ候補は存在しません');
         repetitionFunc(selector,typeArg);
@@ -131,17 +132,18 @@ $(function(){
 
   //キーボードアクション
   //-----------------------------------//
-  //実行 cmd(enter)
   $(document).find('#plugin-search-selector-input').keydown(function (e) {
     if(e.keyCode===13&&!event.shiftKey){
+      //実行 cmd(enter)
       searchFunction();
       return false;
-    }
-  });
-  //実行 cmd(enter+shift)
-  $(document).find('#plugin-search-selector-input').keydown(function (e) {
-    if(e.keyCode===13&&event.shiftKey){
+    }else if(e.keyCode===13&&event.shiftKey){
+      //実行 cmd(enter+shift)
       searchFunction('reverse');
+      return false;
+    }else if(e.keyCode===27){
+      //クローズ cmd(esc)
+      $(document).find('#plugin-search-selector').hide();
       return false;
     }
   });
