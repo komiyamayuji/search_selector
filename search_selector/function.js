@@ -155,4 +155,12 @@ $(function(){
       return false;
     }
   });
+  //アイコンクリック処理
+  chrome.extension.onMessage.addListener(function(request) {
+    if (request == "showSearchSelector") {
+      $(document).find('#plugin-search-selector').show();
+      $(document).find('#plugin-search-selector-input').select();
+      return false;
+    }
+  });
 });

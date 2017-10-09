@@ -8,8 +8,11 @@
       "19": "./icon_19x19.png",
       "38": "./icon_38x38.png"
     },
-    "default_title": "Link Checker",
-    "default_popup": "./search.html"
+    "default_title": "search selector"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
   },
   "content_scripts": [
     {
@@ -18,5 +21,11 @@
       "js": ["jquery-2.1.1.min.js", "function.js"],
       "run_at": "document_start"
     }
+  ],
+  "permissions": [
+    "tabs",
+    "background",
+    "http://*/*",
+    "https://*/*"
   ]
 }
