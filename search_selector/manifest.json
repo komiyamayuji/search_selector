@@ -3,6 +3,14 @@
   "name": "セレクタ検索",
   "version": "0.2.1",
   "description": "ページ内のセレクタを検索できるアドオン",
+  "browser_action": {
+    "default_icon": {
+      "19": "./icon_19x19.png",
+      "38": "./icon_38x38.png"
+    },
+    "default_title": "Link Checker",
+    "default_popup": "./search.html"
+  },
   "content_scripts": [
     {
       "matches": ["http://*/*","https://*/*"],
