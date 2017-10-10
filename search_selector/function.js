@@ -1,7 +1,7 @@
 $(function(){
 
   //html生成
-  $('body').prepend('<div id="plugin-search-selector"><span id="plugin-search-selector-close">close</span><p id="plugin-search-selector-text">検索したいセレクタを入力</p><div id="plugin-search-selector-submit"><input id="plugin-search-selector-input" type="text"><p id="plugin-search-selector-submit-class">search</p></div></div>');
+  $('body').prepend('<div id="plugin-search-selector"><span id="plugin-search-selector-close">close</span><p id="plugin-search-selector-text">検索したいセレクタを入力</p><div id="plugin-search-selector-submit"><input id="plugin-search-selector-input"><p id="plugin-search-selector-submit-class">search</p></div></div>');
 
   //設定
   //-----------------------------------//
@@ -26,11 +26,10 @@ $(function(){
     };
     //function:該当箇所へスクロール
     var scrollFunc = function($selectorArg,$thisIndex){
-      console.log($selectorArg)
       try{
         var ofsetH = $selectorArg.eq($thisIndex).offset().top - 150;//150は余白
         var tryFlag = true;
-        $('body,html').animate({scrollTop: ofsetH},100);
+        $('body,html').animate({scrollTop: ofsetH},30);
       } catch(e){
         tryFlag = false;
       } finally {
@@ -40,7 +39,8 @@ $(function(){
     //function:検索対象のループ
     var repetitionFunc = function ($selectorArg,typeArg) {
       var $thisSelector = $(document).find($selectorArg).filter(function () {
-        // if($(this).attr('id')&&!$(this).attr('id').match(/plugin-search-selector/g)){ return $(this); }
+        if($(this).attr('id')&&$(this).attr('id').match(/plugin-search-selector/g)){}
+        else{ return $(this); }
       });
       if( repetitionFlag && repetitionFlag === $selectorArg){
         //indexの選定 リバース処理
@@ -50,7 +50,7 @@ $(function(){
           }else{
             $thisIndex = 0;
           }
-        }else if( typeArg == 'reverse' ){
+        }else if( typeArg === 'reverse' ){
           if( $thisIndex > 0 ){
             $thisIndex --;
           }else{
@@ -157,7 +157,7 @@ $(function(){
   });
   //アイコンクリック処理
   chrome.extension.onMessage.addListener(function(request) {
-    if (request == "showSearchSelector") {
+    if (request === "showSearchSelector") {
       $(document).find('#plugin-search-selector').show();
       $(document).find('#plugin-search-selector-input').select();
       return false;

@@ -10,18 +10,18 @@
     },
     "default_title": "search selector"
   },
-  "background": {
-    "scripts": ["./background.js"],
-    "persistent": false
-  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["style.css"],
+      "css": ["./style.css"],
       "js": ["./jquery-2.1.1.min.js", "./function.js"],
       "run_at": "document_start"
     }
   ],
+  "background": {
+    "scripts": ["./background.js"],
+    "persistent": false
+  },
   "permissions": [
     "tabs",
     "background",
